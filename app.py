@@ -49,7 +49,8 @@ events_data = [
         "Ambiente": "Criollo",
         "Horario": "Diurno",
         "Descripcion": "Recorrido gastronómico local."
-    },
+    },]
+
 # ---------- SIDEBAR ----------
 st.sidebar.title("Filtros")
 
