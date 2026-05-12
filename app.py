@@ -5,7 +5,7 @@ import os
 # Asegurar que el path local se reconozca en Streamlit Cloud
 sys.path.append(os.path.dirname(__file__))
 
-from config import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
+from config.py import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
 from data.database import initialize_db, get_all_places
 from logic.filters import apply_search_filters
 from logic.planner import calculate_total_cost, is_budget_exceeded
