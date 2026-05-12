@@ -15,7 +15,7 @@ st.markdown(f"""
     .stButton>button {{ background-color: #F96167; color: white; border: none; }}
     .stBadge {{ background-color: #F9E795; color: #1A1A1A; }}
     </style>
-    """, unsafe_allow_state_cache=True)
+    """, unsafe_allow_html=True)
 
 # 1. BASE DE DATOS MOCK
 @st.cache_data
