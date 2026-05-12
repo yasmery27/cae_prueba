@@ -6,11 +6,11 @@ import os
 sys.path.append(os.path.dirname(__file__))
 
 from config.py import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
-from data.database import initialize_db, get_all_places
-from logic.filters import apply_search_filters
-from logic.planner import calculate_total_cost, is_budget_exceeded
-from ui.styles import inject_brand_css
-from ui.components import render_map, place_card
+from data.database.py import initialize_db, get_all_places
+from logic.filters.py import apply_search_filters
+from logic.planner.py import calculate_total_cost, is_budget_exceeded
+from ui.styles.py import inject_brand_css
+from ui.components.py import render_map, place_card
 
 # Inicialización con feedback de carga
 if 'db_ready' not in st.session_state:
