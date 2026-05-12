@@ -2,15 +2,20 @@ import streamlit as st
 import sys
 import os
 
-# Asegurar que el path local se reconozca en Streamlit Cloud
-sys.path.append(os.path.dirname(__file__))
+# 1. ESTA ES LA LÍNEA CRÍTICA: Añade la carpeta actual al buscador de Python
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from config.py import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
-from data.database.py import initialize_db, get_all_places
-from logic.filters.py import apply_search_filters
-from logic.planner.py import calculate_total_cost, is_budget_exceeded
-from ui.styles.py import inject_brand_css
-from ui.components.py import render_map, place_card
+# 2. Ahora sí, importa tus módulos locales
+try:
+    from config import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
+    from data.database import initialize_db, get_all_places
+    from logic.filters import apply_search_filters
+    from logic.planner import calculate_total_cost, is_budget_exceeded
+    from ui.styles import inject_brand_css
+    from ui.components import render_map, place_card
+except ImportError as e:
+    st.error(f"Error de importación: {e}. Asegúrate de que los archivos .py estén en las carpetas correctas.")
+    st.stop()
 
 # Inicialización con feedback de carga
 if 'db_ready' not in st.session_state:
