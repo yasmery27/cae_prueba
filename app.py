@@ -2,28 +2,33 @@ import streamlit as st
 import sys
 import os
 
-# 1. ESTA ES LA LÍNEA CRÍTICA: Añade la carpeta actual al buscador de Python
+# 1. Ajuste de rutas (Python puro, permitido antes de config)
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# 2. Ahora sí, importa tus módulos locales
+# 2. IMPORTANTE: Esto debe ir ANTES de cualquier otro comando de st.*
 try:
     from config import APP_NAME, DEFAULT_BUDGET, ZONES, MOODS
-    from data.database import initialize_db, get_all_places
-    from logic.filters import apply_search_filters
-    from logic.planner import calculate_total_cost, is_budget_exceeded
-    from ui.styles import inject_brand_css
-    from ui.components import render_map, place_card
-except ImportError as e:
-    st.error(f"Error de importación: {e}. Asegúrate de que los archivos .py estén en las carpetas correctas.")
-    st.stop()
+except ImportError:
+    APP_NAME = "SDQ Ocio Hub"  # Fallback por si acaso
+    DEFAULT_BUDGET, ZONES, MOODS = 2000, [], []
 
-# Inicialización con feedback de carga
+st.set_page_config(page_title=APP_NAME, layout="wide", page_icon="📍")
+
+# 3. Ahora sí, el resto de los imports y comandos
+from data.database import initialize_db, get_all_places
+from logic.filters import apply_search_filters
+from logic.planner import calculate_total_cost, is_budget_exceeded
+from ui.styles import inject_brand_css
+from ui.components import render_map, place_card
+
+# 4. Inicialización (con spinner después de set_page_config)
 if 'db_ready' not in st.session_state:
     with st.spinner("Certificando datos de la ciudad..."):
         initialize_db()
         st.session_state.db_ready = True
 
-st.set_page_config(page_title=APP_NAME, layout="wide", page_icon="📍")
+inject_brand_css()
+# ... resto de tu código
 inject_brand_css()
 
 # Estado de sesión para itinerario
